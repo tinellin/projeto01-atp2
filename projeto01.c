@@ -132,7 +132,7 @@ Image loadImage()
 
   do
   {
-    pgmFile = openFile("r+", ".pgm", INPUT_FILE);
+    pgmFile = openFile("rb", ".pgm", INPUT_FILE);
 
     if (pgmFile == NULL)
       printf("\nNao foi possivel abrir o arquivo! Verifique se o nome esta correto.\n\n");
@@ -152,7 +152,7 @@ Image loadImage()
 FILE *openFile(char *mode, char *type, int method)
 {
   FILE *file;
-  char *path = malloc(sizeof(char) * 10);
+  char *path = malloc(sizeof(char) * 5000);
 
   if (method == INPUT_FILE)
     printf("Digite aqui o nome do arquivo %s de entrada: ", type);
@@ -378,7 +378,7 @@ void createThresholdingImg(Image img)
     }
 
   imgTholdParsed = parseImgArrayToPgmFile(imgThold, rows, cols);
-  pgmThresholded = openFile("w+", ".pgm", OUTPUT_FILE);
+  pgmThresholded = openFile("wb", ".pgm", OUTPUT_FILE);
 
   writeInFile(imgThold.header.fullHeader, pgmThresholded, 0);
   writeInFile(imgTholdParsed, pgmThresholded, 1);
@@ -418,7 +418,7 @@ void createNegativeImg(Image img)
     }
 
   imgNegativeParsed = parseImgArrayToPgmFile(imgNegative, rows, cols);
-  pgmNegative = openFile("w+", ".pgm", OUTPUT_FILE);
+  pgmNegative = openFile("wb", ".pgm", OUTPUT_FILE);
 
   writeInFile(imgNegative.header.fullHeader, pgmNegative, 0);
   writeInFile(imgNegativeParsed, pgmNegative, 1);
@@ -485,7 +485,7 @@ void generateHistogram(Image img)
 
   graysParsed[ctStr] = '\0';
 
-  histogram = openFile("w+", ".txt", OUTPUT_FILE);
+  histogram = openFile("wb", ".txt", OUTPUT_FILE);
   writeInFile(graysParsed, histogram, 1);
 
   free(graysParsed);
